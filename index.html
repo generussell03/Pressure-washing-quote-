@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pressure Washing Quote</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            margin: 0;
+            padding: 30px 15px;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        .price-note {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 30px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #1d4ed8;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        #quoteResult {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: #eff6ff;
+            border-radius: 10px;
+        }
+
+        .quote-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .total {
+            border-top: 2px solid #bfdbfe;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .minimum {
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Pressure Washing Quote</h1>
+
+    <p class="subtitle">
+        Enter your information below to receive an instant estimate.
+    </p>
+
+    <form id="quoteForm">
+
+        <h2>Customer Information</h2>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required>
+
+
+        <h2>Services</h2>
+
+        <label for="house">House Square Footage</label>
+        <input type="number" id="house" min="0" value="0">
+        <div class="price-note">$0.15 per square foot</div>
+
+
+        <label for="driveway">Driveway Square Footage</label>
+        <input type="number" id="driveway" min="0" value="0">
+        <div class="price-note">$0.12 per square foot</div>
+
+
+        <label for="deck">Deck Square Footage</label>
+        <input type="number" id="deck" min="0" value="0">
+        <div class="price-note">$0.30 per square foot</div>
+
+
+        <label for="fence">Fence Linear Feet</label>
+        <input type="number" id="fence" min="0" value="0">
+        <div class="price-note">$1.00 per linear foot</div>
+
+
+        <button type="submit">Calculate My Quote</button>
+
+    </form>
+
+
+    <div id="quoteResult">
+
+        <h2>Your Estimate</h2>
+
+        <div class="quote-line">
+            <span>House</span>
+            <span id="houseTotal">$0.00</span>
+        </div>
+
+        <div class="quote-line">
+            <span>Driveway</span>
+            <span id="drivewayTotal">$0.00</span>
+        </div>
+
+        <div class="quote-line">
+            <span>Deck</span>
+            <span id="deckTotal">$0.00</span>
+        </div>
+
+        <div class="quote-line">
+            <span>Fence</span>
+            <span id="fenceTotal">$0.00</span>
+        </div>
+
+        <div class="quote-line total">
+            <span>Estimated Total</span>
+            <span id="finalTotal">$0.00</span>
+        </div>
+
+        <div class="minimum">
+            Minimum job charge: $150
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.getElementById("quoteForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const house = Number(document.getElementById("house").value) || 0;
+    const driveway = Number(document.getElementById("driveway").value) || 0;
+    const deck = Number(document.getElementById("deck").value) || 0;
+    const fence = Number(document.getElementById("fence").value) || 0;
+
+
+    const housePrice = house * 0.15;
+    const drivewayPrice = driveway * 0.12;
+    const deckPrice = deck * 0.30;
+    const fencePrice = fence * 1.00;
+
+
+    const subtotal =
+        housePrice +
+        drivewayPrice +
+        deckPrice +
+        fencePrice;
+
+
+    const finalPrice = Math.max(subtotal, 150);
+
+
+    document.getElementById("houseTotal").textContent =
+        "$" + housePrice.toFixed(2);
+
+    document.getElementById("drivewayTotal").textContent =
+        "$" + drivewayPrice.toFixed(2);
+
+    document.getElementById("deckTotal").textContent =
+        "$" + deckPrice.toFixed(2);
+
+    document.getElementById("fenceTotal").textContent =
+        "$" + fencePrice.toFixed(2);
+
+    document.getElementById("finalTotal").textContent =
+        "$" + finalPrice.toFixed(2);
+
+
+    document.getElementById("quoteResult").style.display = "block";
+
+});
+
+</script>
+
+</body>
+</html>
